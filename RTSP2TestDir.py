@@ -4,10 +4,6 @@ import numpy as np
 # cap = cv2.VideoCapture('srcMovie2.mp4')
 cap = cv2.VideoCapture(0)
 
-# 出力動画設定
-fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
-out = cv2.VideoWriter("output.avi", fourcc, 5.0, (1280,720))
-
 frame1 = cap.read()[1]
 frame2 = cap.read()[1]
 imgNum = 0
