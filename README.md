@@ -24,6 +24,8 @@
 https://qiita.com/haseshin/items/59aed8bae8a1fa88fa21
 - 顔推定
 https://qiita.com/hitomatagi/items/8f2f37646179aca68649
+- 顔データベース(yale-face)
+http://vision.ucsd.edu/content/yale-face-database
 
 ## Requirement
 * Python 3.8.4
