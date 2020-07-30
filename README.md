@@ -19,6 +19,12 @@
 - 退室処理
 1. 後々
 
+## Reference
+- RTSP
+https://qiita.com/haseshin/items/59aed8bae8a1fa88fa21
+- 顔推定
+https://qiita.com/hitomatagi/items/8f2f37646179aca68649
+
 ## Requirement
 * Python 3.8.4
 ## Author
