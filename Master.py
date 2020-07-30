@@ -16,10 +16,10 @@ for fileName in os.listdir(trainPath):
     # 画像1枚ずつ処理
     i = 0
     while i < len(trainLabels):
-        # trainData.imagesに保存
-        Data.trainData.images.append(trainImages[i])
-        # trainData.labelsに保存
-        Data.trainData.labels.append(trainLabels[i])
+        # TrainData.imagesに保存
+        Data.TrainData.images.append(trainImages[i])
+        # TrainData.labelsに保存
+        Data.TrainData.labels.append(trainLabels[i])
 
         # trainフォルダに保存する命名規則の番号を増やす
         for key, value in Data.Name.items():
@@ -40,22 +40,30 @@ badConfidencePath = "./BadTest/"
 while(1):
     # testフォルダに画像がある場合の処理
     if len(os.listdir(testPath)) > 0:
-        # 戻り値 :　顔アップの画像郡
-        a = testPath + os.listdir(testPath)[0]
+        #顔画像郡をとってくる。
         testImages, _ = Recognizer.getImgData(testPath, os.listdir(testPath)[0])
+        # 顔が認識しなかったら
+        if not testImages:
+            # BadTestディレクトリに入れる
+            print(Data.Color.RED + "Not detected face" + Data.Color.END)
+            img = cv2.imread(testPath + os.listdir(testPath)[0])
+            cv2.imwrite(badConfidencePath + os.listdir(testPath)[0], img)
+            os.remove(testPath + os.listdir(testPath)[0])
+            continue
+
 
         # 画像1枚ずつ処理
         i = 0
         while i < len(testImages):
             # 顔推定
             # 戻り値　label : 顔推定結果のラベル, confidence : 推定結果の信頼度
-            recognizedLabel, confidence = Recognizer.recognize(testImages[i])
+            recognizedLabel, confidenceJudge = Recognizer.recognize(testImages[i])
             if(confidence <= 50):
-                print("Good confidence")
-                #  trainData.imagesに保存
-                Data.trainData.images.append(testImages[i])
-                #  trainData.labelsに保存
-                Data.trainData.labels.append(recognizedLabel)
+                print(Data.Color.GREEN + "Good confidence" + Data.Color.END)
+                #  TrainData.imagesに保存
+                Data.TrainData.images.append(testImages[i])
+                #  TrainData.labelsに保存
+                Data.TrainData.labels.append(recognizedLabel)
                 # -   -   -   -   テスト画像をtrainフォルダに保存    -   -   -   - #
                 # 顔推定結果のラベルと、dicの名前が一致したら、画像のナンバーを一つ増やす
                 for key, value in Data.Name.items():
@@ -68,7 +76,7 @@ while(1):
                         cv2.imwrite(name, testImages[i])
                         print("TestIMG Save to \"", name, "\"")
             else:
-                print("Bad confidence")
+                print(Data.Color.RED + "Bad confidence" + Data.Color.END)
                 img = cv2.imread(testPath + os.listdir(testPath)[0])
                 cv2.imwrite(badConfidencePath + os.listdir(testPath)[0], img)
 
@@ -77,5 +85,5 @@ while(1):
         Recognizer.train()
         # テストファイルを削除
         os.remove(testPath + os.listdir(testPath)[0])
-        print("Delete Test Image")
+        print("Delete Test Image\n")
 # -   -   -   -   !テスト    -   -   -   - #
