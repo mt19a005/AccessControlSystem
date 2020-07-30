@@ -38,7 +38,6 @@ def train():
     print("--- imgNum ---")
     for key, value in Data.Name.items():
         print(key, ", ", value, "Photos")
-    print(" ")
 
 def recognize(testImage):
     # テスト画像に対して予測実施 label = 予測した人の名前, confidence = 予測的確率？

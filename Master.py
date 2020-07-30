@@ -37,6 +37,8 @@ Recognizer.train()
 # -   -   -   -   テスト    -   -   -   - #
 testPath = "./Test/"
 badConfidencePath = "./BadTest/"
+badConfidenceROIPath = "./BadTestROI/"
+noFaceePath = "./NoFace/"
 while(1):
     # testフォルダに画像がある場合の処理
     if len(os.listdir(testPath)) > 0:
@@ -47,7 +49,7 @@ while(1):
             # BadTestディレクトリに入れる
             print(Data.Color.RED + "Not detected face" + Data.Color.END)
             img = cv2.imread(testPath + os.listdir(testPath)[0])
-            cv2.imwrite(badConfidencePath + os.listdir(testPath)[0], img)
+            cv2.imwrite(noFaceePath + os.listdir(testPath)[0], img)
             os.remove(testPath + os.listdir(testPath)[0])
             continue
 
@@ -57,7 +59,7 @@ while(1):
         while i < len(testImages):
             # 顔推定
             # 戻り値　label : 顔推定結果のラベル, confidence : 推定結果の信頼度
-            recognizedLabel, confidenceJudge = Recognizer.recognize(testImages[i])
+            recognizedLabel, confidence = Recognizer.recognize(testImages[i])
             if(confidence <= 50):
                 print(Data.Color.GREEN + "Good confidence" + Data.Color.END)
                 #  TrainData.imagesに保存
@@ -79,6 +81,7 @@ while(1):
                 print(Data.Color.RED + "Bad confidence" + Data.Color.END)
                 img = cv2.imread(testPath + os.listdir(testPath)[0])
                 cv2.imwrite(badConfidencePath + os.listdir(testPath)[0], img)
+                cv2.imwrite(badConfidenceROIPath + os.listdir(testPath)[0], testImages[i])
 
             i+=1
         # トレーニング
