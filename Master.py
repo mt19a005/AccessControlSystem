@@ -33,7 +33,7 @@ for fileName in os.listdir(trainPath):
 Recognizer.train()
 
 # -   -   -   -   !初期化    -   -   -   - #
-
+waitFlag = True
 # -   -   -   -   テスト    -   -   -   - #
 testPath = "./Test/"
 badConfidencePath = "./BadTest/"
@@ -42,6 +42,7 @@ noFaceePath = "./NoFace/"
 while(1):
     # testフォルダに画像がある場合の処理
     if len(os.listdir(testPath)) > 0:
+        waitFlag = True
         #顔画像郡をとってくる。
         testImages, _ = Recognizer.getImgData(testPath, os.listdir(testPath)[0])
         # 顔が認識しなかったら
@@ -89,4 +90,8 @@ while(1):
         # テストファイルを削除
         os.remove(testPath + os.listdir(testPath)[0])
         print("Delete Test Image\n")
+    else:
+        if waitFlag:
+            print("Waiting Image...")
+            waitFlag = False
 # -   -   -   -   !テスト    -   -   -   - #
