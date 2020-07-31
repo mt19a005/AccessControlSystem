@@ -6,7 +6,7 @@
 
 - 顔写真撮影処理
 1. RTSPによって、カメラから映像を送信
-1. カスケードによって（もしくは、動体認識によって）、認識されたらキャプチャ（以降、画像A）し、ディレクトリ"Test"に画像を保存。
+1. 動体認識したらキャプチャ（以降、画像A）し、ディレクトリ"Test"に画像を保存。
 
 - 顔推定処理
 1. Testにファイルが有るか確認
@@ -23,6 +23,8 @@
 ## Reference
 - RTSP
 https://qiita.com/haseshin/items/59aed8bae8a1fa88fa21
+- カスケード
+https://qiita.com/hitomatagi/items/04b1b26c1bc2e8081427
 - 顔推定
 https://qiita.com/hitomatagi/items/8f2f37646179aca68649
 - 顔データベース(yale-face)
