@@ -36,9 +36,11 @@ Recognizer.train()
 waitFlag = True
 # -   -   -   -   テスト    -   -   -   - #
 testPath = "./Test/"
-badConfidencePath = "./BadTest/"
-badConfidenceROIPath = "./BadTestROI/"
-noFaceePath = "./NoFace/"
+# Trainデータに無い。（src画像）
+badConfidencePath = "./TestError/BadTest/"
+# Trainデータに無い。（顔領域切り取り画像保存場所）
+badConfidenceROIPath = "./TestError/BadTest/BadTestROI/"
+noFacePath = "./TestError/NoFace/"
 while(1):
     # testフォルダに画像がある場合の処理
     if len(os.listdir(testPath)) > 0:
@@ -50,18 +52,21 @@ while(1):
             # BadTestディレクトリに入れる
             print(Data.Color.RED + "Not detected face" + Data.Color.END)
             img = cv2.imread(testPath + os.listdir(testPath)[0])
-            cv2.imwrite(noFaceePath + os.listdir(testPath)[0], img)
+            cv2.imwrite(noFacePath + os.listdir(testPath)[0] + ".png", img)
             os.remove(testPath + os.listdir(testPath)[0])
             continue
 
 
         # 画像1枚ずつ処理
         i = 0
+        print("kle = ",len(testImages))
         while i < len(testImages):
             # 顔推定
             # 戻り値　label : 顔推定結果のラベル, confidence : 推定結果の信頼度
             recognizedLabel, confidence = Recognizer.recognize(testImages[i])
-            if(confidence <= 50):
+
+            # 顔の信頼度が高ければ
+            if(confidence <= 80):
                 print(Data.Color.GREEN + "Good confidence" + Data.Color.END)
                 #  TrainData.imagesに保存
                 Data.TrainData.images.append(testImages[i])
@@ -78,20 +83,23 @@ while(1):
                         # trainディレクトリに出力
                         cv2.imwrite(name, testImages[i])
                         print("TestIMG Save to \"", name, "\"")
+            # 顔の信頼度が低ければ
             else:
                 print(Data.Color.RED + "Bad confidence" + Data.Color.END)
                 img = cv2.imread(testPath + os.listdir(testPath)[0])
+                # BadTestに入れる
                 cv2.imwrite(badConfidencePath + os.listdir(testPath)[0], img)
-                cv2.imwrite(badConfidenceROIPath + os.listdir(testPath)[0], testImages[i])
+                # BadTestROIに入れる
+                cv2.imwrite(badConfidenceROIPath + os.listdir(testPath)[0] + "-" + str(i) + ".png", testImages[i])
 
             i+=1
         # トレーニング
         Recognizer.train()
         # テストファイルを削除
         os.remove(testPath + os.listdir(testPath)[0])
-        print("Delete Test Image\n")
+        print("Delete Test Image")
     else:
         if waitFlag:
-            print("Waiting Image...")
+            print("Waiting Image...\n")
             waitFlag = False
 # -   -   -   -   !テスト    -   -   -   - #

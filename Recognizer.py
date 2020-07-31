@@ -5,11 +5,10 @@ import Data
 import os
 import numpy as np
 
-# FisherFace
-# recognizer = cv2.face.FisherFaceRecognizer_create()
 # LBPH
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-cascadePath = "haarcascade_frontalface_default.xml"
+cascadePath = "haarcascade_frontalface_alt2.xml"
+
 faceCascade = cv2.CascadeClassifier(cascadePath)
 
 def getImgData(dirPath, fileName):
@@ -29,7 +28,7 @@ def getImgData(dirPath, fileName):
         # ラベル
         labels.append(int(fileName[0:1]))
         # 画像を配列に格納
-        return images, labels
+    return images, labels
 
 def train():
     # トレーニング実施

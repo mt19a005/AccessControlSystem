@@ -1,7 +1,5 @@
 # データ
-
 import os
-from enum import Enum
 
 # 命名規則の番号
 Name = {

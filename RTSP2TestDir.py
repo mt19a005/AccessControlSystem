@@ -48,7 +48,7 @@ while cap.isOpened():
 
         cv2.imwrite(testPath + str(imgNum) + ".png", frame1)
         imgNum += 1
-        if imgNum == 200:
+        if imgNum == 600:
             imgNum = 0
 
     cv2.imshow("MOG1", frame1)
