@@ -23,6 +23,8 @@
 ## Reference
 - RTSP
 https://qiita.com/haseshin/items/59aed8bae8a1fa88fa21
+- カスケード
+https://qiita.com/hitomatagi/items/04b1b26c1bc2e8081427
 - 顔推定
 https://qiita.com/hitomatagi/items/8f2f37646179aca68649
 - 顔データベース(yale-face)
